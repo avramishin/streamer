@@ -12,6 +12,11 @@ class Streamer implements MessageComponentInterface
      */
     protected $clients;
 
+    function __construct()
+    {
+        $this->clients = [];
+    }
+
     function actionSubscribe($msg, $clientId)
     {
         if (empty($msg->destination)) {
@@ -51,11 +56,6 @@ class Streamer implements MessageComponentInterface
                 ]);
             }
         }
-    }
-
-    function __construct()
-    {
-        $this->clients = [];
     }
 
     function onOpen(ConnectionInterface $connection)
