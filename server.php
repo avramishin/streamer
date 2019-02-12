@@ -7,10 +7,9 @@ use App\FileMutex;
 
 require_once __DIR__ . "/bootstrap.php";
 
-$mutex = new FileMutex("message-queue-streamer");
+$port = isset($argv[1]) ? $argv[1] : 8081;
+$mutex = new FileMutex("message-queue-streamer-{$port}");
 $mutex->lockOrDie();
-
-$port = 8081;
 $server = IoServer::factory(
     new HttpServer(
         new WsServer(
@@ -19,5 +18,4 @@ $server = IoServer::factory(
     ),
     $port
 );
-
 $server->run();
